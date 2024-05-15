@@ -9,7 +9,7 @@ import MailListItem from "./MailListItem";
 type IProps = {
     inbox: Array<EmailMessage>;
     onAddToDo: (selected: Array<string>) => void;
-}
+};
 const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
     const [shiftPressed, isShiftPressed] = useState(false);
     const [tempInbox, setTempInbox] = useState([...inbox]);
@@ -19,28 +19,28 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
         if (e.key === "Shift") {
             isShiftPressed(dir === "down");
         }
-    }
+    };
 
     useEffect(() => {
-        window.addEventListener("keydown", e => keycontroller(e, "down"));
-        window.addEventListener("keyup", e => keycontroller(e, "up"));
+        window.addEventListener("keydown", (e) => keycontroller(e, "down"));
+        window.addEventListener("keyup", (e) => keycontroller(e, "up"));
         return () => {
-            window.removeEventListener("keydown", e => keycontroller(e, "down"));
-            window.removeEventListener("keyup", e => keycontroller(e, "up"));
-        }
-    }, [])
+            window.removeEventListener("keydown", (e) => keycontroller(e, "down"));
+            window.removeEventListener("keyup", (e) => keycontroller(e, "up"));
+        };
+    }, []);
 
     useEffect(() => {
         const derivedInbox = [];
-        inbox.forEach(message => {
+        inbox.forEach((message) => {
             const messageCopy = { ...message };
             const date = Date.parse(message.timestamp);
             if (isToday(date)) {
-                messageCopy.timestamp = format(date, 'p');
+                messageCopy.timestamp = format(date, "p");
             } else if (isThisYear(date)) {
-                messageCopy.timestamp = format(date, 'MMM d');
+                messageCopy.timestamp = format(date, "MMM d");
             } else {
-                messageCopy.timestamp = format(date, 'MMM d, yyyy');
+                messageCopy.timestamp = format(date, "MMM d, yyyy");
             }
             derivedInbox.push(messageCopy);
         });
@@ -53,8 +53,8 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                 setSelected([messageId]);
                 return;
             }
-            const start = tempInbox.findIndex(message => message.id === selected[0]);
-            const end = tempInbox.findIndex(message => message.id === messageId);
+            const start = tempInbox.findIndex((message) => message.id === selected[0]);
+            const end = tempInbox.findIndex((message) => message.id === messageId);
             const setRange = [];
 
             if (end > start) {
@@ -80,17 +80,25 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
             }
         }
         return;
-    }
+    };
 
     const convertToTodos = () => {
         onAddToDo(selected);
         setSelected([]);
-    }
+    };
 
     return (
-        <Box display="flex" flexBasis="60%"  flexGrow={1} flexShrink={1} w="100%" h="100%" overflowX="hidden">
+        <Box
+            display="flex"
+            flexBasis="60%"
+            flexGrow={1}
+            flexShrink={1}
+            w="100%"
+            h="100%"
+            overflowX="hidden"
+        >
             <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
-                <Table size='sm' style={{ tableLayout: "fixed" }}>
+                <Table size="sm" style={{ tableLayout: "fixed" }}>
                     <Tbody display="block">
                         {tempInbox.map((message, idx) => {
                             const isSelected = selected.includes(message.id);
@@ -105,7 +113,7 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                                     {message.id === selected[selected.length - 1] && (
                                         <Tr w="100%" display="flex">
                                             <Td display="flex" flex="1 1 auto">
-                                                <Button 
+                                                <Button
                                                     size="xs"
                                                     variant="ghost"
                                                     bg="blue.500"
@@ -121,13 +129,13 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                                         </Tr>
                                     )}
                                 </>
-                            )
+                            );
                         })}
                     </Tbody>
                 </Table>
             </TableContainer>
         </Box>
     );
-}
+};
 
 export default MailList;

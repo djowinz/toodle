@@ -6,7 +6,7 @@ import { format, isThisYear, isToday } from "date-fns";
 type IProps = {
     todos: Array<EmailMessage>;
     removeFromToDos: (selected: Array<string>) => void;
-}
+};
 const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
     const [localTodos, setLocalTodos] = useState([...todos]);
     const [shiftPressed, isShiftPressed] = useState(false);
@@ -16,28 +16,28 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
         if (e.key === "Shift") {
             isShiftPressed(dir === "down");
         }
-    }
+    };
 
     useEffect(() => {
-        window.addEventListener("keydown", e => keycontroller(e, "down"));
-        window.addEventListener("keyup", e => keycontroller(e, "up"));
+        window.addEventListener("keydown", (e) => keycontroller(e, "down"));
+        window.addEventListener("keyup", (e) => keycontroller(e, "up"));
         return () => {
-            window.removeEventListener("keydown", e => keycontroller(e, "down"));
-            window.removeEventListener("keyup", e => keycontroller(e, "up"));
-        }
-    }, [])
+            window.removeEventListener("keydown", (e) => keycontroller(e, "down"));
+            window.removeEventListener("keyup", (e) => keycontroller(e, "up"));
+        };
+    }, []);
 
     useEffect(() => {
         const derivedTodos = [];
-        todos.forEach(message => {
+        todos.forEach((message) => {
             const messageCopy = { ...message };
             const date = Date.parse(message.timestamp);
             if (isToday(date)) {
-                messageCopy.timestamp = format(date, 'p');
+                messageCopy.timestamp = format(date, "p");
             } else if (isThisYear(date)) {
-                messageCopy.timestamp = format(date, 'MMM d');
+                messageCopy.timestamp = format(date, "MMM d");
             } else {
-                messageCopy.timestamp = format(date, 'MMM d, yyyy');
+                messageCopy.timestamp = format(date, "MMM d, yyyy");
             }
             derivedTodos.push(messageCopy);
         });
@@ -50,8 +50,8 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                 setSelected([messageId]);
                 return;
             }
-            const start = localTodos.findIndex(message => message.id === selected[0]);
-            const end = localTodos.findIndex(message => message.id === messageId);
+            const start = localTodos.findIndex((message) => message.id === selected[0]);
+            const end = localTodos.findIndex((message) => message.id === messageId);
             const setRange = [];
 
             if (end > start) {
@@ -77,13 +77,13 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
             }
         }
         return;
-    }
+    };
 
     const removeToDos = () => {
         setSelected([]);
         removeFromToDos(selected);
     };
-    
+
     return (
         <>
             <Box
@@ -99,31 +99,74 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
             >
                 <i>To Do's</i>
                 {localTodos.length > 0 ? (
-                    <Box marginLeft="8px" fontWeight="bold" fontSize="12px" bg="red.500" display="block" w="22px" h="20px" borderRadius={50} textAlign="center" verticalAlign="center" alignContent="center" justifyContent="center">
+                    <Box
+                        marginLeft="8px"
+                        fontWeight="bold"
+                        fontSize="12px"
+                        bg="red.500"
+                        display="block"
+                        w="22px"
+                        h="20px"
+                        borderRadius={50}
+                        textAlign="center"
+                        verticalAlign="center"
+                        alignContent="center"
+                        justifyContent="center"
+                    >
                         {localTodos.length}
                     </Box>
                 ) : null}
             </Box>
-            <Box bg="gray.900" flexDirection="column" display="flex" flexBasis="60%"  flexGrow={1} flexShrink={1} w="100%" h="100%" overflowY="scroll" overflowX="hidden">
+            <Box
+                bg="gray.900"
+                flexDirection="column"
+                display="flex"
+                flexBasis="60%"
+                flexGrow={1}
+                flexShrink={1}
+                w="100%"
+                h="100%"
+                overflowY="scroll"
+                overflowX="hidden"
+            >
                 {localTodos.length === 0 ? (
-                    <Box display="flex" w="100%" h="100%" justifyContent="center" alignItems="center">
-                        <Box marginTop="-80px" fontWeight="bold" fontSize="24px" textShadow="1px 2px black">No todo's</Box>
+                    <Box
+                        display="flex"
+                        w="100%"
+                        h="100%"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Box
+                            marginTop="-80px"
+                            fontWeight="bold"
+                            fontSize="24px"
+                            textShadow="1px 2px black"
+                        >
+                            No todo's
+                        </Box>
                     </Box>
                 ) : (
                     <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
-                        <Table size='sm' style={{ tableLayout: "fixed" }}>
+                        <Table size="sm" style={{ tableLayout: "fixed" }}>
                             <Tbody display="block">
-                                {localTodos.map(message => {
+                                {localTodos.map((message) => {
                                     const isSelected = selected.includes(message.id);
                                     return (
                                         <>
                                             <Tr
                                                 w="100%"
                                                 display="flex"
-                                                bg={isSelected ? "blue.500" : !message.isRead ? "gray.800" : "gray.900"}
-                                                style={{ 
-                                                    fontWeight: !message.isRead ? "bold" : "normal", 
-                                                    userSelect: "none" 
+                                                bg={
+                                                    isSelected
+                                                        ? "blue.500"
+                                                        : !message.isRead
+                                                        ? "gray.800"
+                                                        : "gray.900"
+                                                }
+                                                style={{
+                                                    fontWeight: !message.isRead ? "bold" : "normal",
+                                                    userSelect: "none",
                                                 }}
                                                 _hover={{ cursor: "pointer" }}
                                                 key={message.id}
@@ -134,7 +177,10 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                                                     minW="40px"
                                                     overflow="hidden"
                                                 >
-                                                    <Checkbox onChange={() => handleSelect(message.id)} isChecked={selected.includes(message.id)} />
+                                                    <Checkbox
+                                                        onChange={() => handleSelect(message.id)}
+                                                        isChecked={selected.includes(message.id)}
+                                                    />
                                                 </Td>
                                                 <Td
                                                     flex="0 0 auto"
@@ -179,7 +225,7 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                                             {message.id === selected[selected.length - 1] && (
                                                 <Tr w="100%" display="flex">
                                                     <Td display="flex" flex="1 1 auto">
-                                                        <Button 
+                                                        <Button
                                                             size="xs"
                                                             variant="ghost"
                                                             bg="red.500"
