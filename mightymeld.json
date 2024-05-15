@@ -1,11 +1,8 @@
 {
-  "run": "npm run dev",
+  "run": "yarn dev",
   "run_prettier": true,
-  "include": [
-    "renderer",
-    "prefabs"
-  ],
-  "prefab_dir": "prefabs",
+  "include": ["renderer"],
+  "prefab_dir": "renderer/prefabs",
   "web_server_url": "http://localhost:8888/home",
   "editor": "url:vscode://file/%FILENAME:%LINE:%COLUMN"
 }
