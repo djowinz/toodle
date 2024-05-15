@@ -1,0 +1,12 @@
+appId: com.owinz.toodle
+productName: toodle
+copyright: Copyright © 2024 Owinz LLC
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

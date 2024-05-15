@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "name": "toodle",
+  "description": "Email client that converts your inbox into your todo list. Giving you more intuitive email controls and efficient management of your daily inbox.",
+  "version": "0.0.1",
+  "author": "Dyllen Owens <no-reply@djove.com>",
+  "main": "app/background.js",
+  "entry": {
+    "preload": {
+      "js": "./src/preload.ts"
+    }
+  },
+  "scripts": {
+    "dev": "nextron",
+    "build": "nextron build",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "date-fns": "^3.6.0",
+    "electron-is": "^3.0.0",
+    "electron-serve": "^1.3.0",
+    "electron-store": "^8.2.0",
+    "react-contenteditable": "^3.3.7",
+    "react-icons": "^5.2.1",
+    "recoil": "^0.7.7",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/theme-tools": "^2.1.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mightymeld/runtime": "^0.1.51",
+    "@types/node": "^20.11.16",
+    "@types/react": "^18.2.52",
+    "electron": "^29.3.0",
+    "electron-builder": "^24.13.3",
+    "framer-motion": "^11.0.28",
+    "next": "^13.5.6",
+    "nextron": "^8.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.5"
+  }
+}

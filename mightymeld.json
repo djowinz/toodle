@@ -1,0 +1,11 @@
+{
+  "run": "npm run dev",
+  "run_prettier": true,
+  "include": [
+    "renderer",
+    "prefabs"
+  ],
+  "prefab_dir": "prefabs",
+  "web_server_url": "http://localhost:8888/home",
+  "editor": "url:vscode://file/%FILENAME:%LINE:%COLUMN"
+}
