@@ -6,34 +6,27 @@ type IProps = {
     isSelected: boolean;
     selected: Array<string>;
     handleSelect: (messageId: string) => void;
-}
+};
 const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleSelect }) => {
     return (
         <Tr
             w="100%"
             display="flex"
             bg={isSelected ? "blue.500" : !message.isRead ? "gray.600" : ""}
-            style={{ 
-                fontWeight: !message.isRead ? "bold" : "normal", 
-                userSelect: "none" 
+            style={{
+                fontWeight: !message.isRead ? "bold" : "normal",
+                userSelect: "none",
             }}
             _hover={{ cursor: "pointer" }}
             key={message.id}
         >
-            <Td
-                flex="0 0 auto"
-                flexBasis="40px"
-                minW="40px"
-                overflow="hidden"
-            >
-                <Checkbox onChange={() => handleSelect(message.id)} isChecked={selected.includes(message.id)} />
+            <Td flex="0 0 auto" flexBasis="40px" minW="40px" overflow="hidden">
+                <Checkbox
+                    onChange={() => handleSelect(message.id)}
+                    isChecked={selected.includes(message.id)}
+                />
             </Td>
-            <Td
-                flex="0 0 auto"
-                flexBasis="150px"
-                minW="150px"
-                overflow="hidden"
-            >
+            <Td flex="0 0 auto" flexBasis="150px" minW="150px" overflow="hidden">
                 <Box
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
@@ -69,6 +62,6 @@ const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleS
             </Td>
         </Tr>
     );
-}
+};
 
 export default MailListItem;
