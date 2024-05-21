@@ -161,8 +161,8 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                                                     isSelected
                                                         ? "blue.500"
                                                         : !message.isRead
-                                                        ? "gray.800"
-                                                        : "gray.900"
+                                                        ? "gray.600"
+                                                        : "gray.400"
                                                 }
                                                 style={{
                                                     fontWeight: !message.isRead ? "bold" : "normal",
