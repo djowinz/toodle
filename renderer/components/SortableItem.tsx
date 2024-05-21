@@ -4,7 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import Item from "./Item";
 
-type IProps = PropsWithChildren & { id: string };
+type IProps = PropsWithChildren & { id: number };
 const SortableItem: React.FC<IProps> = ({ id, children }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 

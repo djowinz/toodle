@@ -5,6 +5,21 @@ import { useEffect, useState } from "react";
 import { format, isThisYear, isToday } from "date-fns";
 import { EmailMessage } from "../mocks/EmailMessages";
 import MailListItem from "./MailListItem";
+import {
+    DndContext,
+    KeyboardSensor,
+    PointerSensor,
+    closestCenter,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
+import {
+    SortableContext,
+    arrayMove,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem";
 
 type IProps = {
     inbox: Array<EmailMessage>;
@@ -14,6 +29,13 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
     const [shiftPressed, isShiftPressed] = useState(false);
     const [tempInbox, setTempInbox] = useState([...inbox]);
     const [selected, setSelected] = useState<string[]>([]);
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     const keycontroller = (e: KeyboardEvent, dir: string) => {
         if (e.key === "Shift") {
@@ -87,6 +109,16 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
         setSelected([]);
     };
 
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+
+        if (active.id !== over.id) {
+            setTempInbox((items) => {
+                return arrayMove(items, active.id, over.id);
+            });
+        }
+    };
+
     return (
         <Box
             display="flex"
@@ -100,37 +132,50 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
             <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
                 <Table size="sm" style={{ tableLayout: "fixed" }}>
                     <Tbody display="block">
-                        {tempInbox.map((message, idx) => {
-                            const isSelected = selected.includes(message.id);
-                            return (
-                                <>
-                                    <MailListItem
-                                        message={message}
-                                        isSelected={isSelected}
-                                        selected={selected}
-                                        handleSelect={handleSelect}
-                                    />
-                                    {message.id === selected[selected.length - 1] && (
-                                        <Tr w="100%" display="flex">
-                                            <Td display="flex" flex="1 1 auto">
-                                                <Button
-                                                    size="xs"
-                                                    variant="ghost"
-                                                    bg="blue.500"
-                                                    _hover={{ background: "blue.600" }}
-                                                    onClick={convertToTodos}
-                                                >
-                                                    Add ToDo
-                                                </Button>
-                                            </Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                        </Tr>
-                                    )}
-                                </>
-                            );
-                        })}
+                        <DndContext
+                            sensors={sensors}
+                            collisionDetection={closestCenter}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <SortableContext
+                                items={tempInbox}
+                                strategy={verticalListSortingStrategy}
+                            >
+                                {tempInbox.map((message, idx) => {
+                                    const isSelected = selected.includes(message.id);
+                                    return (
+                                        <>
+                                            <SortableItem key={idx} id={idx}>
+                                                <MailListItem
+                                                    message={message}
+                                                    isSelected={isSelected}
+                                                    selected={selected}
+                                                    handleSelect={handleSelect}
+                                                />
+                                                {message.id === selected[selected.length - 1] && (
+                                                    <Tr w="100%" display="flex">
+                                                        <Td display="flex" flex="1 1 auto">
+                                                            <Button
+                                                                size="xs"
+                                                                variant="ghost"
+                                                                bg="blue.500"
+                                                                _hover={{ background: "blue.600" }}
+                                                                onClick={convertToTodos}
+                                                            >
+                                                                Add ToDo
+                                                            </Button>
+                                                        </Td>
+                                                        <Td display="flex" flex="0 0 auto"></Td>
+                                                        <Td display="flex" flex="0 0 auto"></Td>
+                                                        <Td display="flex" flex="0 0 auto"></Td>
+                                                    </Tr>
+                                                )}
+                                            </SortableItem>
+                                        </>
+                                    );
+                                })}
+                            </SortableContext>
+                        </DndContext>
                     </Tbody>
                 </Table>
             </TableContainer>
