@@ -145,32 +145,32 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                                     const isSelected = selected.includes(message.id);
                                     return (
                                         <>
-                                            <SortableItem key={idx} id={idx}>
-                                                <MailListItem
-                                                    message={message}
-                                                    isSelected={isSelected}
-                                                    selected={selected}
-                                                    handleSelect={handleSelect}
-                                                />
-                                                {message.id === selected[selected.length - 1] && (
-                                                    <Tr w="100%" display="flex">
-                                                        <Td display="flex" flex="1 1 auto">
-                                                            <Button
-                                                                size="xs"
-                                                                variant="ghost"
-                                                                bg="blue.500"
-                                                                _hover={{ background: "blue.600" }}
-                                                                onClick={convertToTodos}
-                                                            >
-                                                                Add ToDo
-                                                            </Button>
-                                                        </Td>
-                                                        <Td display="flex" flex="0 0 auto"></Td>
-                                                        <Td display="flex" flex="0 0 auto"></Td>
-                                                        <Td display="flex" flex="0 0 auto"></Td>
-                                                    </Tr>
-                                                )}
-                                            </SortableItem>
+                                            <MailListItem
+                                                message={message}
+                                                isSelected={isSelected}
+                                                selected={selected}
+                                                handleSelect={handleSelect}
+                                                key={idx}
+                                                id={idx}
+                                            />
+                                            {message.id === selected[selected.length - 1] && (
+                                                <Tr w="100%" display="flex">
+                                                    <Td display="flex" flex="1 1 auto">
+                                                        <Button
+                                                            size="xs"
+                                                            variant="ghost"
+                                                            bg="blue.500"
+                                                            _hover={{ background: "blue.600" }}
+                                                            onClick={convertToTodos}
+                                                        >
+                                                            Add ToDo
+                                                        </Button>
+                                                    </Td>
+                                                    <Td display="flex" flex="0 0 auto"></Td>
+                                                    <Td display="flex" flex="0 0 auto"></Td>
+                                                    <Td display="flex" flex="0 0 auto"></Td>
+                                                </Tr>
+                                            )}
                                         </>
                                     );
                                 })}

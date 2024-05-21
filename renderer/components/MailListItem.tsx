@@ -1,24 +1,34 @@
 import { Box, Checkbox, Td, Tr } from "@chakra-ui/react";
 import { EmailMessage } from "../mocks/EmailMessages";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type IProps = {
     message: EmailMessage;
     isSelected: boolean;
     selected: Array<string>;
     handleSelect: (messageId: string) => void;
+    id: number;
 };
-const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleSelect }) => {
+const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleSelect, id }) => {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+
     return (
         <Tr
             w="100%"
             display="flex"
             bg={isSelected ? "blue.500" : !message.isRead ? "gray.600" : ""}
+            _hover={{ cursor: "pointer" }}
+            key={message.id}
+            ref={setNodeRef}
             style={{
                 fontWeight: !message.isRead ? "bold" : "normal",
                 userSelect: "none",
+                transform: CSS.Transform.toString(transform),
+                transition,
             }}
-            _hover={{ cursor: "pointer" }}
-            key={message.id}
+            {...attributes}
+            {...listeners}
         >
             <Td flex="0 0 auto" flexBasis="40px" minW="40px" overflow="hidden">
                 <Checkbox
