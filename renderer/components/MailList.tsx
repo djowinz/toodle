@@ -130,10 +130,10 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                     _hover={{
                         bg: "#0e0e52",
                     }}
-                    disabled={!selected}
+                    isDisabled={!selected.length}
                     onClick={convertToTodos}
                 >
-                    Add Todo
+                    Add Todos
                 </Button>
             </Box>
             <Box
@@ -151,32 +151,12 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                             {tempInbox.map((message, idx) => {
                                 const isSelected = selected.includes(message.id);
                                 return (
-                                    <>
-                                        <MailListItem
-                                            message={message}
-                                            isSelected={isSelected}
-                                            selected={selected}
-                                            handleSelect={handleSelect}
-                                        />
-                                        {message.id === selected[selected.length - 1] && (
-                                            <Tr w="100%" display="flex">
-                                                <Td display="flex" flex="1 1 auto">
-                                                    <Button
-                                                        size="xs"
-                                                        variant="ghost"
-                                                        bg="blue.500"
-                                                        _hover={{ background: "blue.600" }}
-                                                        onClick={convertToTodos}
-                                                    >
-                                                        Add ToDo
-                                                    </Button>
-                                                </Td>
-                                                <Td display="flex" flex="0 0 auto"></Td>
-                                                <Td display="flex" flex="0 0 auto"></Td>
-                                                <Td display="flex" flex="0 0 auto"></Td>
-                                            </Tr>
-                                        )}
-                                    </>
+                                    <MailListItem
+                                        message={message}
+                                        isSelected={isSelected}
+                                        selected={selected}
+                                        handleSelect={handleSelect}
+                                    />
                                 );
                             })}
                         </Tbody>

@@ -95,28 +95,42 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                 fontSize="13px"
                 fontWeight="bold"
                 alignItems="center"
+                justifyContent="space-between"
                 padding="0 10px"
                 color="white"
             >
-                <i>Todo</i>
-                {localTodos.length > 0 ? (
-                    <Box
-                        marginLeft="8px"
-                        fontWeight="bold"
-                        fontSize="12px"
-                        bg="red.500"
-                        display="block"
-                        w="22px"
-                        h="20px"
-                        borderRadius={50}
-                        textAlign="center"
-                        verticalAlign="center"
-                        alignContent="center"
-                        justifyContent="center"
-                    >
-                        {localTodos.length}
-                    </Box>
-                ) : null}
+                <Box w="100%" display="flex" flexDirection="row">
+                    <i>Todo</i>
+                    {localTodos.length > 0 ? (
+                        <Box
+                            marginLeft="8px"
+                            fontWeight="bold"
+                            fontSize="12px"
+                            bg="red.500"
+                            display="block"
+                            w="22px"
+                            h="20px"
+                            borderRadius={50}
+                            textAlign="center"
+                            verticalAlign="center"
+                            alignContent="center"
+                            justifyContent="center"
+                        >
+                            {localTodos.length}
+                        </Box>
+                    ) : null}
+                </Box>
+                <Button
+                    variant="primary"
+                    fontSize="14px"
+                    _hover={{
+                        bg: "#0e0e52",
+                    }}
+                    isDisabled={!selected.length}
+                    onClick={removeToDos}
+                >
+                    Remove Todos
+                </Button>
             </Box>
             <Box
                 bg="gray.900"
@@ -223,24 +237,6 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                                                     <Box textAlign="right">{message.timestamp}</Box>
                                                 </Td>
                                             </Tr>
-                                            {message.id === selected[selected.length - 1] && (
-                                                <Tr w="100%" display="flex">
-                                                    <Td display="flex" flex="1 1 auto">
-                                                        <Button
-                                                            size="xs"
-                                                            variant="ghost"
-                                                            bg="red.500"
-                                                            _hover={{ background: "red.600" }}
-                                                            onClick={removeToDos}
-                                                        >
-                                                            Remove To Do
-                                                        </Button>
-                                                    </Td>
-                                                    <Td display="flex" flex="0 0 auto"></Td>
-                                                    <Td display="flex" flex="0 0 auto"></Td>
-                                                    <Td display="flex" flex="0 0 auto"></Td>
-                                                </Tr>
-                                            )}
                                         </>
                                     );
                                 })}
