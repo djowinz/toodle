@@ -112,7 +112,7 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
     const handleDragEnd = (event) => {
         const { active, over } = event;
 
-        if (active.id !== over.id) {
+        if (!isNaN(active?.id) && !isNaN(over?.id) && active.id !== over.id) {
             setTempInbox((items) => {
                 return arrayMove(items, active.id, over.id);
             });
