@@ -96,8 +96,9 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                 fontWeight="bold"
                 alignItems="center"
                 padding="0 10px"
+                color="white"
             >
-                <i>To Do's</i>
+                <i>Todo</i>
                 {localTodos.length > 0 ? (
                     <Box
                         marginLeft="8px"
@@ -161,8 +162,8 @@ const TodoList: React.FC<IProps> = ({ todos, removeFromToDos }) => {
                                                     isSelected
                                                         ? "blue.500"
                                                         : !message.isRead
-                                                        ? "gray.800"
-                                                        : "gray.900"
+                                                        ? "gray.400"
+                                                        : "gray.500"
                                                 }
                                                 style={{
                                                     fontWeight: !message.isRead ? "bold" : "normal",
