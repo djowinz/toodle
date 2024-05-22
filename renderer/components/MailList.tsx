@@ -88,53 +88,82 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
     };
 
     return (
-        <Box
-            display="flex"
-            flexBasis="60%"
-            flexGrow={1}
-            flexShrink={1}
-            w="100%"
-            h="100%"
-            overflowX="hidden"
-        >
-            <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
-                <Table size="sm" style={{ tableLayout: "fixed" }}>
-                    <Tbody display="block">
-                        {tempInbox.map((message, idx) => {
-                            const isSelected = selected.includes(message.id);
-                            return (
-                                <>
+        <>
+            <Box
+                bg="gray.700"
+                w="100%"
+                h="50px"
+                display="flex"
+                flexDirection="row"
+                fontSize="13px"
+                fontWeight="bold"
+                alignItems="center"
+                justifyContent="space-between"
+                color="white"
+                padding="0 10px"
+            >
+                <Box w="100%" display="flex" flexDirection="row">
+                    <i>Inbox</i>
+                    {tempInbox.length > 0 ? (
+                        <Box
+                            marginLeft="8px"
+                            fontWeight="bold"
+                            fontSize="12px"
+                            bg="red.500"
+                            display="block"
+                            h="20px"
+                            borderRadius={50}
+                            textAlign="center"
+                            verticalAlign="center"
+                            alignContent="center"
+                            justifyContent="center"
+                            minW="32px"
+                        >
+                            {tempInbox.length}
+                        </Box>
+                    ) : null}
+                </Box>
+
+                <Button
+                    variant="primary"
+                    fontSize="14px"
+                    _hover={{
+                        bg: "#0e0e52",
+                    }}
+                    isDisabled={!selected.length}
+                    onClick={convertToTodos}
+                >
+                    Add Todos
+                </Button>
+            </Box>
+            <Box
+                display="flex"
+                flexBasis="60%"
+                flexGrow={1}
+                flexShrink={1}
+                w="100%"
+                h="100%"
+                overflowX="hidden"
+            >
+                <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
+                    <Table size="sm" style={{ tableLayout: "fixed" }}>
+                        <Tbody display="block">
+                            {tempInbox.map((message, idx) => {
+                                const isSelected = selected.includes(message.id);
+                                return (
                                     <MailListItem
                                         message={message}
                                         isSelected={isSelected}
                                         selected={selected}
                                         handleSelect={handleSelect}
                                     />
-                                    {message.id === selected[selected.length - 1] && (
-                                        <Tr w="100%" display="flex">
-                                            <Td display="flex" flex="1 1 auto">
-                                                <Button
-                                                    size="xs"
-                                                    variant="ghost"
-                                                    bg="blue.500"
-                                                    _hover={{ background: "blue.600" }}
-                                                    onClick={convertToTodos}
-                                                >
-                                                    Add ToDo
-                                                </Button>
-                                            </Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                        </Tr>
-                                    )}
-                                </>
-                            );
-                        })}
-                    </Tbody>
-                </Table>
-            </TableContainer>
-        </Box>
+                                );
+                            })}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </>
     );
 };
 
