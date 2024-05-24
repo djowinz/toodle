@@ -1,5 +1,6 @@
-import { Box, Checkbox, Td, Tr } from "@chakra-ui/react";
+import { Box, Checkbox, Tr } from "@chakra-ui/react";
 import { EmailMessage } from "../mocks/EmailMessages";
+import TableData from "./table/TableData";
 
 type IProps = {
     message: EmailMessage;
@@ -12,21 +13,22 @@ const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleS
         <Tr
             w="100%"
             display="flex"
-            bg={isSelected ? "blue.500" : !message.isRead ? "gray.600" : ""}
+            bg={isSelected ? "blue.500" : !message.isRead ? "gray.600" : "gray.500"}
             style={{
                 fontWeight: !message.isRead ? "bold" : "normal",
                 userSelect: "none",
+                color: "white"
             }}
             _hover={{ cursor: "pointer" }}
             key={message.id}
         >
-            <Td flex="0 0 auto" flexBasis="40px" minW="40px" overflow="hidden">
+            <TableData flex="0 0 auto" flexBasis="40px" minW="40px" overflow="hidden">
                 <Checkbox
                     onChange={() => handleSelect(message.id)}
                     isChecked={selected.includes(message.id)}
                 />
-            </Td>
-            <Td flex="0 0 auto" flexBasis="150px" minW="150px" overflow="hidden">
+            </TableData>
+            <TableData flex="0 0 auto" flexBasis="150px" minW="150px" overflow="hidden">
                 <Box
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
@@ -35,8 +37,8 @@ const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleS
                 >
                     {message.name}
                 </Box>
-            </Td>
-            <Td
+            </TableData>
+            <TableData
                 display="flex"
                 flex="1 1 auto"
                 minW={0}
@@ -56,10 +58,10 @@ const MailListItem: React.FC<IProps> = ({ message, isSelected, selected, handleS
                 >
                     {message.subject}
                 </Box>
-            </Td>
-            <Td flex="0 0 auto" flexBasis="130px" minW="130px">
+            </TableData>
+            <TableData flex="0 0 auto" flexBasis="130px" minW="130px">
                 <Box textAlign="right">{message.timestamp}</Box>
-            </Td>
+            </TableData>
         </Tr>
     );
 };

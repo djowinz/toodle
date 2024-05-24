@@ -1,10 +1,9 @@
-import { useRecoilState } from "recoil";
-import { inboxState } from "../lib/state";
-import { Box, Button, Checkbox, Table, TableContainer, Tbody, Td, Tr } from "@chakra-ui/react";
+import { Box, Button, Table, TableContainer, Tbody, Tr } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { format, isThisYear, isToday } from "date-fns";
 import { EmailMessage } from "../mocks/EmailMessages";
 import MailListItem from "./MailListItem";
+import TableData from "./table/TableData";
 
 type IProps = {
     inbox: Array<EmailMessage>;
@@ -96,11 +95,12 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
             w="100%"
             h="100%"
             overflowX="hidden"
+            backgroundColor="gray.800"
         >
             <TableContainer display="flex" w="100%" overflowY="scroll" overflowX="hidden">
                 <Table size="sm" style={{ tableLayout: "fixed" }}>
                     <Tbody display="block">
-                        {tempInbox.map((message, idx) => {
+                        {tempInbox.map((message) => {
                             const isSelected = selected.includes(message.id);
                             return (
                                 <>
@@ -112,7 +112,7 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                                     />
                                     {message.id === selected[selected.length - 1] && (
                                         <Tr w="100%" display="flex">
-                                            <Td display="flex" flex="1 1 auto">
+                                            <TableData flex="1 1 auto">
                                                 <Button
                                                     size="xs"
                                                     variant="ghost"
@@ -122,10 +122,10 @@ const MailList: React.FC<IProps> = ({ onAddToDo, inbox }) => {
                                                 >
                                                     Add ToDo
                                                 </Button>
-                                            </Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
-                                            <Td display="flex" flex="0 0 auto"></Td>
+                                            </TableData>
+                                            <TableData flex="0 0 auto" />
+                                            <TableData flex="0 0 auto" />
+                                            <TableData flex="0 0 auto" />
                                         </Tr>
                                     )}
                                 </>
